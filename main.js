@@ -1,3 +1,6 @@
+//---
+// Lots of help from this tutorial
+
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
@@ -58,4 +61,3 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-const start = require('./app.js');
