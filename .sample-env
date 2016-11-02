@@ -1,0 +1,9 @@
+# Plaid Config
+PLAID_CLIENT=
+PLAID_KEY=
+PLAID_SECRET=
+
+# Temp User Config
+USERNAME=
+PASSWORD=
+TYPE=
