@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getDaysPast, getWholeDay } from '../../util/date.service.js';
+import styles from './punchcard.styles.css';
 
 export class PunchCard extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export class PunchCard extends Component {
 
   componentWillMount() {
     const { transactions } = this.props;
-    const daysPast = getDaysPast(30);
+    const daysPast = getDaysPast(100);
 
     // Get array where keys are date objects
     const transactionsByDay = {};
@@ -34,20 +35,17 @@ export class PunchCard extends Component {
     const { transactions } = this.props;
 
     return (
-      <div className="punchcard">
+      <div className={styles.root}>
         <h2>PunchCard</h2>
-        {
-          Object.keys(this.state.transactionsByDay).map((day, i) => (
-            <div key={i}>
-              <b>{day}</b>
-                {
-                  this.state.transactionsByDay[day].map((transaction, i) => (
-                    <div key={i}><em>{transaction.date}</em>{transaction.name} : <pre>${transaction.amount}</pre></div>
-                  ))
-                }
-            </div>
-          ))
-        }
+        <div className={styles.punchcard}>
+          {
+            Object.keys(this.state.transactionsByDay).map((day, i) => (
+              <div key={i} className={styles.punch}>
+                { this.state.transactionsByDay[day].length }
+              </div>
+            ))
+          }
+        </div>
       </div>
     )
   }

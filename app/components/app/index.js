@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getUserTransactions } from '../../util/plaid.service.js';
+import styles from './app.styles.css';
 
 // Components
 import Accounts from '../Accounts';
@@ -26,7 +27,7 @@ export class app extends Component {
 
   render() {
     return (
-      <div className="root">
+      <div className={styles.root}>
         <h1>Cents</h1>
         <Accounts accounts={this.state.accounts} />
         {
