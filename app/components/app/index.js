@@ -29,7 +29,9 @@ export class app extends Component {
       <div className="root">
         <h1>Cents</h1>
         <Accounts accounts={this.state.accounts} />
-        <PunchCard transactions={this.state.transactions} />
+        {
+          this.state.transactions.length && <PunchCard transactions={this.state.transactions} />
+        }
       </div>
     );
   }

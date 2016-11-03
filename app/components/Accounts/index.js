@@ -8,7 +8,7 @@ export function Accounts(props) {
       {
         accounts.map((account, i) => (
           <div key={i}>
-            <p>{account.meta.name}, <small>{account.type}</small> : <pre>${account.balance.available || account.balance.current}</pre></p>
+            <div>{account.meta.name}, <small>{account.type}</small> : <pre>${account.balance.available || account.balance.current}</pre></div>
           </div>
         ))
       }
