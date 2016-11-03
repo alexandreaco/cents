@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getPlaidData } from '../../util/plaid.service.js';
+import { getUserTransactions } from '../../util/plaid.service.js';
 
 export class app extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export class app extends Component {
   }
 
   componentWillMount() {
-    getPlaidData().then(res => {
+    getUserTransactions().then(res => {
 
       this.setState({
         accounts: res.accounts,
@@ -28,7 +28,7 @@ export class app extends Component {
           <h2>Accounts</h2>
           {
             this.state.accounts.map((account, i) => (
-              <div>
+              <div key={i}>
                 <p>{account.meta.name}, <small>{account.type}</small></p>
               </div>
             ))
