@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { getUserTransactions } from '../../util/plaid.service.js';
 
+// Components
+import Accounts from '../Accounts';
+import PunchCard from '../PunchCard';
+
 export class app extends Component {
   constructor(props) {
     super(props);
@@ -24,16 +28,8 @@ export class app extends Component {
     return (
       <div className="root">
         <h1>Cents</h1>
-        <div className="account">
-          <h2>Accounts</h2>
-          {
-            this.state.accounts.map((account, i) => (
-              <div key={i}>
-                <p>{account.meta.name}, <small>{account.type}</small></p>
-              </div>
-            ))
-          }
-        </div>
+        <Accounts accounts={this.state.accounts} />
+        <PunchCard transactions={this.state.transactions} />
       </div>
     );
   }
