@@ -1,21 +1,21 @@
+import { handleActions } from 'redux-actions';
+
 import {
-  GET_DATA,
+  SET_USER_DATA,
 } from '../actions/app.actions.js';
 
-const appInitialState = {
-  data: [],
+const initialState = {
+  user: {
+    accounts: [],
+    transactions: [],
+  },
 };
 
-export const appReducer = (state = appInitialState, action) => {
-  switch (action.type) {
-    case [GET_DATA]:
-      return {
-        ...state,
-        data: action.data
-      }
-    default:
-      return state;
-  }
-};
+export default handleActions({
 
-export default appReducer;
+  [SET_USER_DATA]: (state, action) => ({
+    ...state,
+    user: action.payload,
+  }),
+
+}, initialState);

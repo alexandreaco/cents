@@ -1,33 +1,22 @@
-import 'babel-polyfill'; // generators
+import 'babel-polyfill';
 import React from 'react';
-import { render as renderReact } from 'react-dom';
-import debounce from 'debounce';
+import { render } from 'react-dom'
+import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import styles from './main.css';
 
-const state = JSON.parse(localStorage.getItem('state'));
-const store = configureStore(state || {});
+const store = configureStore();
+import Root from './components/Root';
+import PunchCard from './components/PunchCard';
 
-let Root = require('./components/Root').default;
-const render = (Component) => {
-  renderReact(<Component {...store} />, document.getElementById('root'));
-};
-
-if (module.hot) {
-  module.hot.accept('./components/Root', function() {
-    let newApp = require('./components/Root').default;
-    render(newApp);
-  });
-}
-
-const saveState = debounce(() => {
-  localStorage.setItem('state', JSON.stringify(store.getState()));
-}, 1000);
-store.subscribe(() => {
-  saveState();
-  render(Root);
-  if (process.env.ENV === 'development') {
-    console.log('state', store.getState());
-  }
-});
-store.dispatch({ type: 'APP_INIT', store });
+render(
+  <Provider store={store}>
+    <Router history={hashHistory}>
+      <Route path="/" component={Root}>
+        <IndexRoute component={PunchCard} />
+      </Route>
+    </Router>
+  </Provider>,
+  document.getElementById('root')
+)

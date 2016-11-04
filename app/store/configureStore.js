@@ -1,10 +1,21 @@
-import { createStore, applyMiddleware } from 'redux';
-// import createSagaMiddleware from 'redux-saga';
-import rootReducer from '../reducers';
-// import rootSaga from '../sagas';
+import { createStore, applyMiddleware, compose } from 'redux';
+import promiseMiddleware from 'redux-promise'
+import reducer from '../reducers';
 
-export default (initialState) => {
-  return createStore(rootReducer, initialState, applyMiddleware(
-    // createSagaMiddleware(rootSaga)
+export default function configureStore(initialState) {
+
+  const store = createStore(reducer, initialState, compose(
+    applyMiddleware(promiseMiddleware),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
   ));
-};
+
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('../reducers', () => {
+      const nextReducer = require('../reducers');
+      store.replaceReducer(nextReducer);
+    });
+  }
+
+  return store;
+}

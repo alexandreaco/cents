@@ -1,40 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { getUserTransactions } from '../../util/plaid.service.js';
 import styles from './root.styles.css';
 
-// Components
-import Accounts from '../Accounts';
-import PunchCard from '../PunchCard';
+// Actions
+import { setUserData } from '../../actions/app.actions.js';
+
 
 export class Root extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      accounts: [],
-      transactions: [],
-    }
-  }
-
   componentWillMount() {
-    getUserTransactions().then(res => {
-
-      this.setState({
+    getUserTransactions()
+    .then(res => {
+      this.props.dispatch(setUserData({
         accounts: res.accounts,
         transactions: res.transactions,
-      })
+      }));
     });
   }
 
   render() {
+    const { children } = this.props;
     return (
       <div className={styles.root}>
         <h1>Cents</h1>
-        {
-          this.state.transactions.length && <PunchCard transactions={this.state.transactions} />
-        }
+        {children}
       </div>
     );
   }
 }
 
-export default Root;
+export default connect()(Root);

@@ -1,5 +1,6 @@
 //---
 // Lots of help from this tutorial
+// http://red-badger.com/blog/2016/04/18/building-desktop-apps-with-electron-webpack-and-redux/
 
 const electron = require('electron')
 // Module to control application life.

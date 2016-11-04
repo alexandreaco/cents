@@ -1,10 +1,10 @@
 const moment = require('moment');
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { getDaysPast, getWholeDay, getWeek, mapTransactions } from '../../util/date.service.js';
 import styles from './punchcard.styles.css';
 
 // Components
-import Day from './Day';
 import Week from './Week';
 
 export class PunchCard extends Component {
@@ -17,8 +17,8 @@ export class PunchCard extends Component {
 
 
   componentWillMount() {
-    const { transactions } = this.props;
-    const transactionsByDay = mapTransactions(getDaysPast(200), transactions);
+    const { user } = this.props;
+    const transactionsByDay = mapTransactions(getDaysPast(200), user.transactions);
 
     this.setState({
       transactionsByDay: transactionsByDay,
@@ -26,7 +26,7 @@ export class PunchCard extends Component {
   }
 
   render() {
-    const { transactions } = this.props;
+    const { user } = this.props;
 
     return (
       <div className={styles.root}>
@@ -35,7 +35,7 @@ export class PunchCard extends Component {
         {
           Object.keys(this.state.transactionsByDay).map((day, i) => (
             moment(day).weekday() === 0 && (
-              <Week startDay={new Date(day)} key={i} transactions={mapTransactions(getWeek(day), transactions)}/>
+              <Week startDay={new Date(day)} key={i} transactions={mapTransactions(getWeek(day), user.transactions)}/>
             )
           ))
         }
@@ -45,4 +45,11 @@ export class PunchCard extends Component {
   }
 }
 
-export default PunchCard;
+// Retrieve data from store as props
+const mapStateToProps = (state) => {
+  return {
+    user: state.app.user,
+  };
+}
+
+export default connect(mapStateToProps)(PunchCard);
