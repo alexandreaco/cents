@@ -79,7 +79,7 @@ export class PunchCard extends Component {
         {
           Object.keys(this.state.transactionsByDay).map((day, i) => (
             moment(day).weekday() === 0 && (
-              <Week startDay={new Date(day)} />
+              <Week startDay={new Date(day)} key={i} />
             )
           ))
         }

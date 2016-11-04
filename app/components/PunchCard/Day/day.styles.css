@@ -1,7 +1,12 @@
-.root {
+.root,
+.today {
   padding: 15px 10px;
   margin: 10px 5px;
   border: 1px solid #e6e5e5;
   border-radius: 2px;
   font-size: 10px;
+}
+
+.today {
+  border-color: #b7e4b7;
 }

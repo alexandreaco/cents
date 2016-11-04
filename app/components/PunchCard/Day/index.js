@@ -1,3 +1,4 @@
+const moment = require('moment');
 import React from 'react';
 import styles from './day.styles.css';
 
@@ -20,9 +21,12 @@ export function Day(props) {
       }
     })
   }
+  const isToday = moment().diff(new Date(day), 'days') === 0;
+  const rootStyles = isToday ? styles.today : styles.root;
+
   return (
-    <div className={styles.root}>
-      <p>{daysOfWeek[date.getDay()]} {date.getMonth()}/{date.getDate()}/{date.getFullYear()}</p>
+    <div className={rootStyles}>
+      <p>{moment(day).format('MMM Do \'YY')}</p>
       {transactions && <p>Transactions: {transactions.length}</p>}
       <p>Expense: {expense}</p>
       <p>Income: {income}</p>
