@@ -8,14 +8,14 @@ import styles from './main.css';
 const state = JSON.parse(localStorage.getItem('state'));
 const store = configureStore(state || {});
 
-let App = require('./components/app').default;
+let Root = require('./components/Root').default;
 const render = (Component) => {
   renderReact(<Component {...store} />, document.getElementById('root'));
 };
 
 if (module.hot) {
-  module.hot.accept('./components/app', function() {
-    let newApp = require('./components/app').default;
+  module.hot.accept('./components/Root', function() {
+    let newApp = require('./components/Root').default;
     render(newApp);
   });
 }
@@ -25,7 +25,7 @@ const saveState = debounce(() => {
 }, 1000);
 store.subscribe(() => {
   saveState();
-  render(App);
+  render(Root);
   if (process.env.ENV === 'development') {
     console.log('state', store.getState());
   }

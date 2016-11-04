@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { getUserTransactions } from '../../util/plaid.service.js';
-import styles from './app.styles.css';
+import styles from './root.styles.css';
 
 // Components
 import Accounts from '../Accounts';
 import PunchCard from '../PunchCard';
 
-export class app extends Component {
+export class Root extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,4 +37,4 @@ export class app extends Component {
   }
 }
 
-export default app;
+export default Root;

@@ -6,9 +6,8 @@ export function Day(props) {
   const { day, transactions } = props;
   let expense = 0;
   let income = 0;
-  const date = new Date(day);
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+  // Build expenses and income counts
   if (transactions && transactions.length) {
     transactions.forEach(transaction => {
       if (transaction.amount < 0) {
@@ -21,6 +20,7 @@ export function Day(props) {
       }
     })
   }
+  // Set day specific styles
   const isToday = moment().diff(new Date(day), 'days') === 0;
   const rootStyles = isToday ? styles.today : styles.root;
 

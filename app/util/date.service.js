@@ -38,3 +38,19 @@ export const getWeek = (day) => {
   }
   return week;
 }
+
+
+export const mapTransactions = (someDays, transactions) => {
+  const transactionsOverTime = {};
+  // Build a list dates -> array objects
+  someDays.forEach(day => {
+    transactionsOverTime[day] = new Array();
+  });
+  // Attribute transactions to days in list
+  transactions.forEach(transaction => {
+    const date = getWholeDay(new Date(transaction.date));
+    if (transactionsOverTime[date]) transactionsOverTime[date].push(transaction);
+  })
+
+  return transactionsOverTime;
+}
