@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 export const getDaysPast = (daysAgo) => {
   const today = getWholeDay();
   const yesterday = getDayPast(daysAgo);
@@ -22,4 +24,17 @@ export const getWholeDay = (day) => {
   date.setSeconds(0);
   date.setMilliseconds(0);
   return date;
+}
+
+export const getWeek = (day) => {
+  const startOfWeek = moment(day).startOf('week');
+  const endOfWeek = moment(day).endOf('week');
+  const week = [];
+  let d = startOfWeek;
+
+  while (d <= endOfWeek) {
+    week.push(d.toDate());
+    d = d.clone().add(1, 'd');
+  }
+  return week;
 }

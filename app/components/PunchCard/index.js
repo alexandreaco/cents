@@ -1,3 +1,4 @@
+const moment = require('moment');
 import React, { Component } from 'react';
 import { getDaysPast, getWholeDay } from '../../util/date.service.js';
 import styles from './punchcard.styles.css';
@@ -50,16 +51,38 @@ export class PunchCard extends Component {
 
   render() {
     const { transactions } = this.props;
+    Object.keys(this.state.transactionsByDay).forEach((day, i) => {
+      // console.log(this.state.transactionsByDay[day]);
+      console.log(moment(day).weekday());
+      // If it is a Sunday, build a new week
+      if (moment(day).weekday() === 0) {
+        console.log(`a new week starting at ${day}`);
+      }
+    })
 
+    // return (
+      // <div className={styles.root}>
+      //   <h2>PunchCard</h2>
+      //   <div className={styles.punchcard}>
+      //     {
+      //       Object.keys(this.state.transactionsByDay).map((day, i) => (
+      //         <Day key={i} day={day} transactions={this.state.transactionsByDay[day]} />
+      //       ))
+      //     }
+      //   </div>
+      // </div>
+    // )
     return (
       <div className={styles.root}>
         <h2>PunchCard</h2>
         <div className={styles.punchcard}>
-          {
-            Object.keys(this.state.transactionsByDay).map((day, i) => (
-              <Day key={i} day={day} transactions={this.state.transactionsByDay[day]} />
-            ))
-          }
+        {
+          Object.keys(this.state.transactionsByDay).map((day, i) => (
+            moment(day).weekday() === 0 && (
+              <Week startDay={new Date(day)} />
+            )
+          ))
+        }
         </div>
       </div>
     )

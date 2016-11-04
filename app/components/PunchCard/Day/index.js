@@ -8,7 +8,7 @@ export function Day(props) {
   const date = new Date(day);
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  if (transactions.length) {
+  if (transactions && transactions.length) {
     transactions.forEach(transaction => {
       if (transaction.amount < 0) {
         expense -= transaction.amount;
@@ -23,7 +23,7 @@ export function Day(props) {
   return (
     <div className={styles.root}>
       <p>{daysOfWeek[date.getDay()]} {date.getMonth()}/{date.getDate()}/{date.getFullYear()}</p>
-      <p>Transactions: {transactions.length}</p>
+      {transactions && <p>Transactions: {transactions.length}</p>}
       <p>Expense: {expense}</p>
       <p>Income: {income}</p>
     </div>
