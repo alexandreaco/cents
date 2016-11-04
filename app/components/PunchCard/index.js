@@ -4,6 +4,7 @@ import styles from './punchcard.styles.css';
 
 // Components
 import Day from './Day';
+import Week from './Week';
 
 export class PunchCard extends Component {
   constructor(props) {
@@ -32,6 +33,19 @@ export class PunchCard extends Component {
     this.setState({
       transactionsByDay: transactionsByDay,
     })
+
+
+    // console.log(transactionsByDay);
+    // const weeks = [];
+    // Object.keys(transactionsByDay).forEach((day, i) => {
+    //   if (new Date(day).getDay() === 0) {
+    //     console.log('SUNDAY');
+    //     console.log(transactionsByDay[day]);
+    //     const thisWeek = transactionsByDay.slice(i, i+6);
+    //     weeks.push(thisWeek);
+    //   }
+    // })
+    // console.log(weeks);
   }
 
   render() {

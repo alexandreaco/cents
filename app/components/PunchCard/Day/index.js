@@ -11,13 +11,11 @@ export function Day(props) {
   if (transactions.length) {
     transactions.forEach(transaction => {
       if (transaction.amount < 0) {
-        console.log(transaction.amount);
         expense -= transaction.amount;
       }
     })
     transactions.forEach(transaction => {
       if (transaction.amount > 0) {
-        console.info(transaction.amount);
         income += transaction.amount;
       }
     })
