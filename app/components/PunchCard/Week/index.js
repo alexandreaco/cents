@@ -6,13 +6,13 @@ import { getWeek } from '../../../util/date.service.js';
 import Day from '../Day';
 
 export function Week(props) {
-  const { startDay } = props;
+  const { startDay, transactions } = props;
   const weekDays = getWeek(startDay || new Date());
 
   return (
     <div className={styles.root}>
       {weekDays.map((day, i) => (
-        <Day key={i} day={day} />
+        <Day key={i} day={day} transactions={transactions[day]}/>
       ))}
     </div>
   )

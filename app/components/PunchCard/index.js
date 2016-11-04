@@ -1,6 +1,6 @@
 const moment = require('moment');
 import React, { Component } from 'react';
-import { getDaysPast, getWholeDay } from '../../util/date.service.js';
+import { getDaysPast, getWholeDay, getWeek } from '../../util/date.service.js';
 import styles from './punchcard.styles.css';
 
 // Components
@@ -13,6 +13,20 @@ export class PunchCard extends Component {
     this.state = {
       transactionsByDay: [],
     }
+  }
+
+  getTransactionsForWeek = (day) => {
+    const { transactions } = this.props;
+    const thisWeek = getWeek(day);
+    const transactionsForWeek = {};
+    thisWeek.forEach(day => {
+      transactionsForWeek[day] = new Array();
+    });
+    transactions.forEach(transaction => {
+      const date = getWholeDay(new Date(transaction.date));
+      if (transactionsForWeek[date]) transactionsForWeek[date].push(transaction);
+    })
+    return transactionsForWeek;
   }
 
   componentWillMount() {
@@ -53,11 +67,14 @@ export class PunchCard extends Component {
     const { transactions } = this.props;
     Object.keys(this.state.transactionsByDay).forEach((day, i) => {
       // console.log(this.state.transactionsByDay[day]);
-      console.log(moment(day).weekday());
-      // If it is a Sunday, build a new week
-      if (moment(day).weekday() === 0) {
-        console.log(`a new week starting at ${day}`);
-      }
+      // console.log(moment(day).weekday());
+      // // If it is a Sunday, build a new week
+      // if (moment(day).weekday() === 0) {
+      //   console.log('---------')
+      //   console.log(`a new week starting at ${day}`);
+      //   console.log(getWeek(day));
+      //   console.info(this.getTransactionsForWeek(day));
+      // }
     })
 
     // return (
@@ -79,7 +96,7 @@ export class PunchCard extends Component {
         {
           Object.keys(this.state.transactionsByDay).map((day, i) => (
             moment(day).weekday() === 0 && (
-              <Week startDay={new Date(day)} key={i} />
+              <Week startDay={new Date(day)} key={i} transactions={this.getTransactionsForWeek(day)}/>
             )
           ))
         }
