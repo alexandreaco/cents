@@ -29,7 +29,6 @@ export class app extends Component {
     return (
       <div className={styles.root}>
         <h1>Cents</h1>
-        <Accounts accounts={this.state.accounts} />
         {
           this.state.transactions.length && <PunchCard transactions={this.state.transactions} />
         }
