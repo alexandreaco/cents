@@ -15,7 +15,7 @@ export class Root extends Component {
       this.props.dispatch(setUserData({
         accounts: res.accounts,
         transactions: res.transactions,
-        transactionsByDay: mapTransactions(getDaysPast(200), res.transactions),
+        transactionsByDay: mapTransactions(getDaysPast(972), res.transactions),
       }));
     });
   }
