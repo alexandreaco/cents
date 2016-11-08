@@ -1,22 +1,44 @@
 const moment = require('moment');
 import React from 'react';
+import { connect } from 'react-redux';
 import styles from './day.styles.css';
 
 export function Day(props) {
-  const { day, transactions } = props;
+  const { day, transactions, accounts } = props;
   let expense = 0;
   let income = 0;
 
   // Build expenses and income counts
   if (transactions && transactions.length) {
     transactions.forEach(transaction => {
-      if (transaction.amount < 0) {
-        expense -= transaction.amount;
+      //---
+      //  Don't include...
+      //  - credit card payments
+      //  - transfers
+      //
+      let ignore = false;
+      let modifier = 1;
+      if (transaction.category) {
+        if (
+          transaction.category.indexOf('Payment') >= 0 && transaction.category.indexOf('Credit Card') >= 0
+          || transaction.category.indexOf('Payment') >= 0 && transaction.category.indexOf('Debit') >= 0
+          || transaction.category.indexOf('Internal Account Transfer') >= 0
+        ) {
+          ignore = true;
+          // console.warn(transaction);
+        }
       }
-    })
-    transactions.forEach(transaction => {
-      if (transaction.amount > 0) {
-        income += transaction.amount;
+
+      // Populate expenses and income!
+      // Multiple by -1 to get expected values.
+      // i.e. user expenses $10, but card registers a debt +10
+      if (!ignore) {
+        if (transaction.amount * -1 < 0) {
+          expense -= (transaction.amount * -1);
+        }
+        if (transaction.amount * -1 > 0) {
+          income += (transaction.amount * -1);
+        }
       }
     })
   }
@@ -48,4 +70,11 @@ export function Day(props) {
   )
 }
 
-export default Day;
+// Retrieve data from store as props
+const mapStateToProps = (state) => {
+  return {
+    accounts: state.app.user.accounts,
+  };
+}
+
+export default connect(mapStateToProps)(Day);

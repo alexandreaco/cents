@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUserTransactions } from '../../util/plaid.service.js';
+import { getDaysPast, mapTransactions } from '../../util/date.service.js';
 import styles from './root.styles.css';
 
 // Actions
@@ -14,6 +15,7 @@ export class Root extends Component {
       this.props.dispatch(setUserData({
         accounts: res.accounts,
         transactions: res.transactions,
+        transactionsByDay: mapTransactions(getDaysPast(200), res.transactions),
       }));
     });
   }
