@@ -27,7 +27,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  if (process.env.ENV === 'development') mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -38,10 +38,20 @@ function createWindow () {
   })
 }
 
+// This method installs an extensions for debugging
+function installExtensions() {
+  const installExtension = require('electron-devtools-installer').default;
+  const REDUX_DEVTOOLS = require('electron-devtools-installer').REDUX_DEVTOOLS;
+  installExtension(REDUX_DEVTOOLS);
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+  if (process.env.ENV === 'development') installExtensions();
+  createWindow();
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
