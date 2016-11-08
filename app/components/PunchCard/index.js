@@ -18,7 +18,7 @@ export class PunchCard extends Component {
 
   componentWillMount() {
     const { user } = this.props;
-    const transactionsByDay = mapTransactions(getDaysPast(200), user.transactions);
+    const transactionsByDay = mapTransactions(getDaysPast(90), user.transactions);
 
     this.setState({
       transactionsByDay: transactionsByDay,
