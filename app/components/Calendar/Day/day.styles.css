@@ -1,0 +1,53 @@
+.root,
+.future {
+  padding: 15px 10px;
+  margin: 0;
+  border: 1px solid #e6e5e5;
+  font-size: 10px;
+  width: calc(100% / 7);
+  box-sizing: border-box;
+  position: relative;
+  height: 100px;
+}
+
+.future {
+  border-color: #b7e4b7;
+}
+
+.date {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+}
+
+.expense {
+  color: #fb675d;
+}
+
+.income {
+  color: #2bbf2b;
+}
+
+.mute {
+  color: #e6e5e5;
+}
+
+.month {
+  position: absolute;
+  top: 100%;
+  left: 2px;
+  transform: rotate(270deg);
+  transform-origin: left top;
+  width: 98px;
+  text-align: center;
+}
+
+.monthLabel {
+  background: #e6e5e5;
+  padding: 2px 5px 3px 5px;
+}
+
+.values {
+  padding: 10px 0 5px 15px;
+  text-align: right;
+}

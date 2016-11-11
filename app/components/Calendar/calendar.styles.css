@@ -1,0 +1,16 @@
+.root {
+
+}
+
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.punch {
+  width: 5%;
+  background-color: #F7F7F7;
+  border: 1px solid #e3e4e4;
+  margin: 5px;
+  padding: 2px;
+}
