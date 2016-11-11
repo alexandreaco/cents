@@ -1,0 +1,5 @@
+# Plaid Config
+PLAID_CLIENT=
+PLAID_KEY=
+PLAID_SECRET=
+ACCESS_TOKEN=test_amex
