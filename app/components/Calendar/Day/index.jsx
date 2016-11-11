@@ -1,32 +1,27 @@
-const moment = require('moment');
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styles from './day.styles.css';
 
-export function Day(props) {
+const moment = require('moment');
+
+function Day(props) {
   const { day, transactions } = props;
   let expense = 0;
   let income = 0;
 
   // Build expenses and income counts
   if (transactions && transactions.length > 0) {
-    transactions.forEach(transaction => {
+    transactions.forEach((transaction) => {
       //---
       //  Don't include...
       //  - credit card payments
       //  - transfers
       //
       let ignore = false;
-      let modifier = 1;
       if (transaction.category) {
-        if (
-          transaction.category.indexOf('Payment') >= 0 && transaction.category.indexOf('Credit Card') >= 0
-          || transaction.category.indexOf('Payment') >= 0 && transaction.category.indexOf('Debit') >= 0
-          || transaction.category.indexOf('Internal Account Transfer') >= 0
-        ) {
-          ignore = true;
-          // console.warn(transaction);
-        }
+        if (transaction.category.indexOf('Payment') >= 0 && transaction.category.indexOf('Credit Card') >= 0) ignore = true;
+        else if (transaction.category.indexOf('Payment') >= 0 && transaction.category.indexOf('Debit') >= 0) ignore = true;
+        else if (transaction.category.indexOf('Internal Account Transfer') >= 0) ignore = true;
       }
 
       // Populate expenses and income!
@@ -40,7 +35,7 @@ export function Day(props) {
           income += (transaction.amount * -1);
         }
       }
-    })
+    });
   }
   // Set day specific styles
   const dateObj = new Date(day);
@@ -53,7 +48,7 @@ export function Day(props) {
       <div className={styles.month}>
         <span className={styles.monthLabel}>{moment(dateObj).format('MMMM')}</span>
       </div>
-    )
+    );
   }
   return (
     <div className={rootStyles}>
@@ -67,7 +62,7 @@ export function Day(props) {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 // Retrieve data from store as props
@@ -75,6 +70,14 @@ const mapStateToProps = (state) => {
   return {
     accounts: state.app.user.accounts,
   };
-}
+};
+
+Day.propTypes = {
+  day: React.PropTypes.instanceOf(Date),
+  transactions: PropTypes.arrayOf(PropTypes.shape({
+    category: PropTypes.arrayOf(PropTypes.string),
+    amount: PropTypes.number,
+  })),
+};
 
 export default connect(mapStateToProps)(Day);

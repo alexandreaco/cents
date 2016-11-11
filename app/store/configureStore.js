@@ -1,9 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import promiseMiddleware from 'redux-promise'
+import promiseMiddleware from 'redux-promise';
 import reducer from '../reducers';
 
 export default function configureStore(initialState) {
-
   const store = createStore(reducer, initialState, compose(
     applyMiddleware(promiseMiddleware),
     window.devToolsExtension ? window.devToolsExtension() : f => f
@@ -12,7 +11,7 @@ export default function configureStore(initialState) {
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
-      const nextReducer = require('../reducers');
+      const nextReducer = require('../reducers'); // eslint-disable-line global-require
       store.replaceReducer(nextReducer);
     });
   }

@@ -2,13 +2,13 @@ import { handleActions } from 'redux-actions';
 
 import {
   SET_USER_DATA,
-} from '../actions/app.actions.js';
+} from '../actions/app.actions';
 
 const initialState = {
   user: {
     accounts: [],
     transactions: [],
-    transactionsByDay: [],
+    transactionsByDay: {},
   },
 };
 
