@@ -4,3 +4,4 @@ build/
 dist/
 Cents*
 npm-debug.log
+data/
