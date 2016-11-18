@@ -26,5 +26,25 @@ export const setUserData = createAction(SET_USER_DATA, (data) => {
     }
   });
 
+  // Store and update accounts
+  data.accounts.forEach((account) => {
+    db.accounts.find({ _id: account._id }, (err, docs) => {
+      if (docs.length <= 0) {
+        db.accounts.insert(account);
+      } else {
+        db.accounts.update({ _id: account._id }, account);
+      }
+    });
+  });
+
+  // Store transactions
+  data.transactions.forEach((transaction) => {
+    db.transactions.find({ _id: transaction._id }, (err, docs) => {
+      if (docs.length <= 0) {
+        db.transactions.insert(transaction);
+      }
+    });
+  });
+
   return data;
 });
