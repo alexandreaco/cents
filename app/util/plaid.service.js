@@ -31,5 +31,5 @@ export const getInstitutions = () => {
   return fetch('https://tartan.plaid.com/institutions', {
     method: 'get',
   })
-  .then(res => res.json())
-}
+  .then(res => res.json());
+};

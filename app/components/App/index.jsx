@@ -16,7 +16,9 @@ class App extends Component {
         accounts: res.accounts,
         transactions: res.transactions,
         transactionsByDay: mapTransactions(getDaysPast(100), res.transactions),
+        access_token: res.access_token,
       }));
+      // this.props.dispatch(setUserData(res));
     });
   }
 

@@ -1,5 +1,5 @@
 // Database
-var Datastore = require('nedb');
+const Datastore = require('nedb');
 
 const configureDatabase = () => {
   const db = {};
@@ -11,6 +11,7 @@ const configureDatabase = () => {
   db.app.loadDatabase();
   db.accounts.loadDatabase();
   db.transactions.loadDatabase();
-}
+  return db;
+};
 
 export default configureDatabase;

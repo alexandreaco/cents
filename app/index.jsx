@@ -7,12 +7,10 @@ import configureStore from './store/configureStore';
 import App from './components/App';
 import Welcome from './components/Welcome';
 import Calendar from './components/Calendar';
-import configureDatabase from './db';
 
 require('./main.css');
 
 const store = configureStore();
-const db = configureDatabase();
 
 render(
   <Provider store={store}>
