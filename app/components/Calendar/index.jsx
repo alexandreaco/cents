@@ -1,27 +1,35 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getWeek, mapTransactions } from '../../util/date.service';
+import { getWeek, getDaysPast, mapTransactions } from '../../util/date.service';
 import styles from './calendar.styles.css';
 import Week from './Week';
 
 const moment = require('moment');
 
-function Calendar(props) {
-  const { user } = props;
-  return (
-    <div className={styles.root}>
-      <h2>Calendar</h2>
-      <div className={styles.calendar}>
-        {
-          Object.keys(user.transactionsByDay).map((day, i) => (
-            moment(day).weekday() === 0 && (
-              <Week startDay={new Date(day)} key={i} transactions={mapTransactions(getWeek(day), user.transactions)} />
-            )
-          ))
-        }
+class Calendar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      transactionsByDay: mapTransactions(getDaysPast(600), this.props.user.transactions),
+    };
+  }
+  render() {
+    const { user } = this.props;
+    return (
+      <div className={styles.root}>
+        <h2>Calendar</h2>
+        <div className={styles.calendar}>
+          {
+            Object.keys(this.state.transactionsByDay).map((day, i) => (
+              moment(day).weekday() === 0 && (
+                <Week startDay={new Date(day)} key={i} transactions={mapTransactions(getWeek(day), user.transactions)} />
+              )
+            ))
+          }
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 // Retrieve data from store as props
@@ -33,7 +41,7 @@ const mapStateToProps = (state) => {
 
 Calendar.propTypes = {
   user: PropTypes.shape({
-    transactionsByDay: PropTypes.object,
+    transactions: PropTypes.array,
   }),
 };
 
