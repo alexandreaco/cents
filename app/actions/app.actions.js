@@ -8,21 +8,21 @@ const db = configureDatabase();
 
 // Actions
 export const setUserData = createAction(SET_USER_DATA, (data) => {
-  // Check for userData
-  db.app.find({ type: 'userData' }, (err, docs) => {
-    // Add userData if not present
+  // Store user data
+  const { access_token, institution } = data;
+  db.users.find({ _id: access_token }, (err, docs) => {
     if (docs.length <= 0) {
-      const user = {
-        type: 'userData',
-        access_token: data.access_token,
-      };
-      db.app.insert(user, () => {});
+      db.users.insert({
+        _id: access_token,
+        institution,
+      });
     } else {
-      // Update access_token
-      const query = { type: 'userData' };
-      const update = { $set: { access_token: data.access_token } };
-      const options = {};
-      db.app.update(query, update, options, () => {});
+      // probably don't want to update.
+      // TODO: should throw an error that account already exists
+      db.users.update({
+        _id: access_token,
+        institution,
+      });
     }
   });
 

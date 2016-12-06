@@ -47,7 +47,9 @@ class Welcome extends Component {
         });
       } else if (res.access_token) {
         this.props.dispatch(setUserData({
+          access_token: res.access_token,
           accounts: res.accounts,
+          institution,
           transactions: res.transactions,
           transactionsByDay: mapTransactions(getDaysPast(100), res.transactions),
         }));
@@ -76,7 +78,7 @@ class Welcome extends Component {
           <form onSubmit={this._handleSubmit}>
             <select ref="institution">
               {
-                this.state.institutions.map((inst) => (
+                this.state.institutions.map(inst => (
                   <option key={inst.id} value={inst.id}>{inst.name}</option>
                 ))
               }
@@ -108,6 +110,8 @@ class Welcome extends Component {
   }
 }
 
-Welcome.propTypes = {};
+Welcome.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect()(Welcome);
