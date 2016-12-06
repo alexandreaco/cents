@@ -53,7 +53,7 @@ class Welcome extends Component {
           transactions: res.transactions,
           transactionsByDay: mapTransactions(getDaysPast(100), res.transactions),
         }));
-        hashHistory.push('/calendar');
+        hashHistory.push('/');
       }
     })
     .catch((err) => {

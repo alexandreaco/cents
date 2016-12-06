@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
-import configureDatabase from '../db';
+import configureDatabase, { getUsersDatabase } from '../db';
 
 // Constants
 export const SET_USER_DATA = 'SET_USER_DATA';
@@ -10,19 +10,16 @@ const db = configureDatabase();
 export const setUserData = createAction(SET_USER_DATA, (data) => {
   // Store user data
   const { access_token, institution } = data;
-  db.users.find({ _id: access_token }, (err, docs) => {
+  const users = getUsersDatabase();
+  users.find({ _id: access_token }, (err, docs) => {
     if (docs.length <= 0) {
-      db.users.insert({
+      users.insert({
         _id: access_token,
         institution,
       });
     } else {
-      // probably don't want to update.
       // TODO: should throw an error that account already exists
-      db.users.update({
-        _id: access_token,
-        institution,
-      });
+      // console.info('user already exists');
     }
   });
 
