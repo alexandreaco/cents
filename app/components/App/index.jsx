@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styles from './app.styles.css';
+import Navigation from './Navigation';
 
 class App extends Component {
   componentWillMount() {
@@ -10,7 +11,7 @@ class App extends Component {
     const { children } = this.props;
     return (
       <div className={styles.root}>
-        <h1>Cents</h1>
+        <Navigation />
         {children}
       </div>
     );

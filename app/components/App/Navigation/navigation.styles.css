@@ -1,0 +1,8 @@
+.root {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.link {
+  margin: 0 10px;
+}
