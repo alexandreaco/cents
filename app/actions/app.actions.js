@@ -3,6 +3,7 @@ import configureDatabase, { getUsersDatabase } from '../db';
 
 // Constants
 export const SET_USER_DATA = 'SET_USER_DATA';
+export const GET_USER_DATA = 'GET_USER_DATA';
 
 const db = configureDatabase();
 
@@ -34,14 +35,14 @@ export const setUserData = createAction(SET_USER_DATA, (data) => {
     });
   });
 
-  // Store transactions
-  data.transactions.forEach((transaction) => {
-    db.transactions.find({ _id: transaction._id }, (err, docs) => {
-      if (docs.length <= 0) {
-        db.transactions.insert(transaction);
-      }
-    });
-  });
+  // // Store transactions
+  // data.transactions.forEach((transaction) => {
+  //   db.transactions.find({ _id: transaction._id }, (err, docs) => {
+  //     if (docs.length <= 0) {
+  //       db.transactions.insert(transaction);
+  //     }
+  //   });
+  // });
 
   return data;
 });

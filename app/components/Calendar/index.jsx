@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getWeek, getDaysPast, mapTransactions } from '../../util/date.service';
+import { getAllTransactions } from '../../actions/transaction.actions';
 import styles from './calendar.styles.css';
 import Week from './Week';
 
@@ -13,6 +14,12 @@ class Calendar extends Component {
       transactionsByDay: mapTransactions(getDaysPast(600), this.props.user.transactions),
     };
   }
+
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(getAllTransactions());
+  }
+
   render() {
     const { user } = this.props;
     return (
@@ -43,6 +50,7 @@ Calendar.propTypes = {
   user: PropTypes.shape({
     transactions: PropTypes.array,
   }),
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps)(Calendar);
