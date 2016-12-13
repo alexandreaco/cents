@@ -8,28 +8,21 @@ import Week from './Week';
 const moment = require('moment');
 
 class Calendar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      transactionsByDay: mapTransactions(getDaysPast(600), this.props.user.transactions),
-    };
-  }
-
   componentWillMount() {
     const { dispatch } = this.props;
     dispatch(getAllTransactions());
   }
 
   render() {
-    const { user } = this.props;
+    const { allTransactions, transactionsByDay } = this.props;
     return (
       <div className={styles.root}>
         <h2>Calendar</h2>
         <div className={styles.calendar}>
           {
-            Object.keys(this.state.transactionsByDay).map((day, i) => (
+            getDaysPast(1000).map((day, i) => (
               moment(day).weekday() === 0 && (
-                <Week startDay={new Date(day)} key={i} transactions={mapTransactions(getWeek(day), user.transactions)} />
+                <Week startDay={new Date(day)} key={i} transactions={mapTransactions(getWeek(day), allTransactions)} />
               )
             ))
           }
@@ -42,14 +35,12 @@ class Calendar extends Component {
 // Retrieve data from store as props
 const mapStateToProps = (state) => {
   return {
-    user: state.app.user,
+    allTransactions: state.transactions.all,
   };
 };
 
 Calendar.propTypes = {
-  user: PropTypes.shape({
-    transactions: PropTypes.array,
-  }),
+  allTransactions: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
